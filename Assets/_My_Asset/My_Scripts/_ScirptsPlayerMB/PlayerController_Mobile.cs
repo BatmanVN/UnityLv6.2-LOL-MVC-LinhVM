@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController_Mobile : BaseCharacter 
+public class PlayerController_Mobile : BaseCharacter
 {
     [SerializeField] protected VariableJoystick joystick;
     [SerializeField] private SetOutlineManager_Mobile outlineManager;
@@ -18,19 +18,20 @@ public class PlayerController_Mobile : BaseCharacter
     public GameObject BlessGod;
     public GameObject BonusDame;
     public GameObject fireSkill;
+    private Coroutine coroutine;
     public bool isUseJoy;
     public bool isMoving;
 
-    public float HealAmount { get => healAmount;}
-    public Health CharaterHealth { get => charaterHealth;}
+    public float HealAmount { get => healAmount; }
+    public Health CharaterHealth { get => charaterHealth; }
     public Transform Target { get => target; set => target = value; }
     public float QualifiedDistance { get => qualifiedDistance; }
-    public float MinDistance { get => minDistance;}
+    public float MinDistance { get => minDistance; }
 
     private void OnValidate() => characterController = GetComponent<CharacterController>();
     private void Start()
     {
-        
+        //coroutine = StartCoroutine(EnableLoseBar());
     }
     private void Update()
     {
@@ -52,14 +53,14 @@ public class PlayerController_Mobile : BaseCharacter
         if (characterController.velocity != Vector3.zero)
         {
             Quaternion targetRotate = Quaternion.LookRotation(characterController.velocity);
-            transform.rotation = Quaternion.Slerp(transform.rotation,targetRotate,rotateSpeed*Time.deltaTime);
-            MoveAnim(ConstString.moveParaname,moveAnim,SmothTime);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotate, rotateSpeed * Time.deltaTime);
+            MoveAnim(ConstString.moveParaname, moveAnim, SmothTime);
             isUseJoy = true;
             isMoving = true;
         }
         if (moveAnim <= 0.1f)
         {
-            MoveAnim(ConstString.moveParaname, 0f , SmothTime);
+            MoveAnim(ConstString.moveParaname, 0f, SmothTime);
             isMoving = false;
         }
     }
@@ -69,7 +70,6 @@ public class PlayerController_Mobile : BaseCharacter
         for (int i = 0; i < listEnemy.Count; i++)
         {
             float distanceTarget = Vector3.Distance(transform.position, listEnemy[i].transform.position);
-            Debug.Log("Distance: " + distanceTarget + listEnemy[i].name);
             if (distanceTarget <= QualifiedDistance && !listEnemy[i].CharacterHealth.dead)
             {
                 outlineManager.SelectTarget();
@@ -104,7 +104,7 @@ public class PlayerController_Mobile : BaseCharacter
         if (charaterHealth.dead)
         {
             ChangeAnim(ConstString.dieParaname);
-            charaterHealth.Die();
+            StartCoroutine(EnableLoseBar());
             foreach (var component in Compenents)
             {
                 component.enabled = false;
@@ -115,6 +115,12 @@ public class PlayerController_Mobile : BaseCharacter
             ChangeAnim(ConstString.hitParaname);
             charaterHealth.beAttack = false;
         }
+    }
+   private IEnumerator EnableLoseBar()
+    {
+        yield return new WaitForSeconds(3f);
+        UiManager.Instance.UiGames[1].SetActive(true);
+        //StopCoroutine(coroutine);
     }
     private void OnDrawGizmos()
     {

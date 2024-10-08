@@ -40,8 +40,8 @@ public class Health : MonoBehaviour
         healthPoint += healAmount;
         onHealthChanged?.Invoke(target.GetComponent<Health>().healthPoint, target.GetComponent<Health>().maxHealth);
     }
-    public void Die()
-    {
-        onDie?.Invoke();
-    }
+    //public void Die()
+    //{
+    //    onDie?.Invoke();
+    //}
 }

@@ -19,7 +19,7 @@ public class SpearController : BaseCharacter
     public Transform Player { get => player; set => player = value; }
 
     public float SpeedMove() => CheckSpeed();
-    public float SmoothTime() => SmothTime;
+    public float SmoothTime() => SmothTime; 
     private void Start()
     {
         firstPoint = transform.position;

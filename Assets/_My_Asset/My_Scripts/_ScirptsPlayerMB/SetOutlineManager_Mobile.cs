@@ -20,8 +20,7 @@ public class SetOutlineManager_Mobile : MonoBehaviour
             targetObj = null;
         }
         targetObj = player.Target;
-        Debug.Log(targetObj);
-        if (targetObj != null && player.Target != null)
+        if (targetObj != null /*&& player.Target != null*/)
         {
             if (targetObj.CompareTag(ConstString.spearMan))
             {

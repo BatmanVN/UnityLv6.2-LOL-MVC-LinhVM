@@ -21,7 +21,7 @@ public class SkillAttack_mobile : Singleton<SkillAttack_mobile>
         }
         StatusSkill();
     }
-    public void AttackBySkill1()
+    protected void AttackBySkill1()
     {
         if (targetEnemy != null)
         {
@@ -33,7 +33,7 @@ public class SkillAttack_mobile : Singleton<SkillAttack_mobile>
             }
         }
     }
-    public void AttackSkill2()
+    protected void AttackSkill2()
     {
         player.fireSkill.SetActive(true);
         if (targetEnemy != null)
