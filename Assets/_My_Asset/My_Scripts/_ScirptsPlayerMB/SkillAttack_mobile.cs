@@ -8,10 +8,12 @@ public class SkillAttack_mobile : Singleton<SkillAttack_mobile>
     [SerializeField] protected Health health;
     [SerializeField] protected GameObject targetEnemy;
     [SerializeField] protected float dameSkill;
+    [SerializeField] protected AudioSource[] audios;
     private float caculaterDirection;
     public Skill1_mobile skill1;
     public Skill2_mobile skill2;
     public Skill3_mobile skill3;
+    public bool isCastSkill;
     private void Update()
     {
         if (player.Target != null)
@@ -39,7 +41,7 @@ public class SkillAttack_mobile : Singleton<SkillAttack_mobile>
         if (targetEnemy != null)
         {
             AttackCondition(targetEnemy.transform);
-            if (Vector3.Distance(player.transform.position,targetEnemy.transform.position) <= player.MinDistance && caculaterDirection >0.9f)
+            if (Vector3.Distance(player.transform.position,targetEnemy.transform.position) <= player.MinDistance && caculaterDirection > 0.9f)
             {
                 dameSkill = player.Dame + 30;
                 health.TakeDame(targetEnemy, dameSkill);
@@ -54,15 +56,6 @@ public class SkillAttack_mobile : Singleton<SkillAttack_mobile>
     }
     public void StatusSkill()
     {
-        if (skill3.isSkill3)
-        {
-            player.ChangeAnim(ConstString.powerUpParaname);
-            player.BlessGod.SetActive(true);
-            player.BonusDame.SetActive(true);
-            skill3.isSkill3 = false;
-            skill3.IsSkillCD = true;
-            Invoke(nameof(DisableVFXBonusDame), 10f);
-        }
         if (!skill1.isClick && !skill1.IsSkillCD)
         {
             if (skill1.castSkill)
@@ -72,6 +65,8 @@ public class SkillAttack_mobile : Singleton<SkillAttack_mobile>
                 player.ChangeAnim(ConstString.kickParaname);
                 skill1.castSkill = false;
                 skill1.IsSkillCD = true;
+                isCastSkill = true;
+                audios[0].Play();
             }
         }
         if (!skill2.isClick && !skill2.IsSkillCD)
@@ -83,20 +78,39 @@ public class SkillAttack_mobile : Singleton<SkillAttack_mobile>
                 player.ChangeAnim(ConstString.swordParaname);
                 skill2.castSkill = false;
                 skill2.IsSkillCD = true;
+                isCastSkill = true;
+                audios[1].Play();
             }
+        }
+        if (skill3.isSkill3)
+        {
+            player.ChangeAnim(ConstString.powerUpParaname);
+            player.BlessGod.SetActive(true);
+            player.BonusDame.SetActive(true);
+            skill3.isSkill3 = false;
+            skill3.IsSkillCD = true;
+            isCastSkill = true;
+            Invoke(nameof(DisableVFXBonusDame), 10f);
+            audios[2].Play();
         }
     }
     public void AttackSkill3()
     {
         player.CharaterHealth.Healing(player.gameObject, player.HealAmount);
     }
+    public void DeCastSkill1()
+    {
+        isCastSkill = false;
+    }
     public void DisableVfxSkill2()
     {
         player.fireSkill.SetActive(false);
+        isCastSkill = false;
     }
     public void DisableVfxSkill3()
     {
         player.BlessGod.SetActive(false);
+        isCastSkill = false;
     }
     protected void DisableVFXBonusDame()
     {

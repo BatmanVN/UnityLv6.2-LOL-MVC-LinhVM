@@ -7,6 +7,8 @@ public class DFAttack : MonoBehaviour
     [SerializeField] protected PlayerController_Mobile player;
     [SerializeField] protected Health health;
     [SerializeField] protected float radius;
+    [SerializeField] protected AudioSource slashAudio;
+    private float caculaterDirection;
     public bool isClick;
     public GameObject targetEnemy;
     public void Attack()
@@ -32,8 +34,24 @@ public class DFAttack : MonoBehaviour
     }
     public void EnemyTakedame()
     {
-        if(targetEnemy != null)
+        float attackDistance = 0f;
+        if (player.Target != null)
+        {
+            attackDistance = Vector3.Distance(transform.position, player.Target.transform.position);
+            AttackCondition(player.Target);
+        }
+        if (targetEnemy != null && attackDistance <= player.MinDistance && caculaterDirection >0.9f)
             health.TakeDame(targetEnemy, player.Dame);
+    }
+    private void AttackCondition(Transform target)
+    {
+        Vector3 playerAngle = player.transform.TransformDirection(Vector3.forward);
+        Vector3 direction = Vector3.Normalize(playerAngle - target.transform.position);
+        caculaterDirection = Vector3.Dot(playerAngle, direction);
+    }
+    public void EnableSound()
+    {
+        slashAudio.Play();
     }
     private void Update()
     {

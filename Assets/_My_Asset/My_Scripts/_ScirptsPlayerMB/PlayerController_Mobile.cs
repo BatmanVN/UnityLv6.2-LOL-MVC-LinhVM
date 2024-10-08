@@ -31,7 +31,7 @@ public class PlayerController_Mobile : BaseCharacter
     private void OnValidate() => characterController = GetComponent<CharacterController>();
     private void Start()
     {
-        //coroutine = StartCoroutine(EnableLoseBar());
+        
     }
     private void Update()
     {
@@ -104,13 +104,13 @@ public class PlayerController_Mobile : BaseCharacter
         if (charaterHealth.dead)
         {
             ChangeAnim(ConstString.dieParaname);
-            StartCoroutine(EnableLoseBar());
+            coroutine = StartCoroutine(EnableLoseBar());
             foreach (var component in Compenents)
             {
                 component.enabled = false;
             }
         }
-        if (!charaterHealth.dead && charaterHealth.beAttack)
+        if (!charaterHealth.dead && charaterHealth.beAttack && !isMoving && !SkillAttack_mobile.Instance.isCastSkill)
         {
             ChangeAnim(ConstString.hitParaname);
             charaterHealth.beAttack = false;
@@ -120,7 +120,7 @@ public class PlayerController_Mobile : BaseCharacter
     {
         yield return new WaitForSeconds(3f);
         UiManager.Instance.UiGames[1].SetActive(true);
-        //StopCoroutine(coroutine);
+        StopCoroutine(coroutine);
     }
     private void OnDrawGizmos()
     {

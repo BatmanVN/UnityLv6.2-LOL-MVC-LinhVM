@@ -9,6 +9,7 @@ public class SpearController : BaseCharacter
     [SerializeField] protected float radius;
     [SerializeField] private Transform player;
     [SerializeField] private VisionDetective vision;
+    public AudioSource spearHit;
     public GameObject healthBar;
     public Collider coliider;
     private Vector3 firstPoint;

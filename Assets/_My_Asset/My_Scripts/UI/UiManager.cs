@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 public class UiManager : Singleton<UiManager>
 {
     [SerializeField] private List<GameObject> uiGames;
+    public AudioSource start;
+    public AudioSource music;
 
     public List<GameObject> UiGames { get => uiGames;}
 
@@ -21,6 +23,8 @@ public class UiManager : Singleton<UiManager>
     {
         Time.timeScale = 1f;
         UiGames[0].SetActive(false);
+        start.Play();
+        music.Play();
     }
     public void Restart(string nameScene)
     {

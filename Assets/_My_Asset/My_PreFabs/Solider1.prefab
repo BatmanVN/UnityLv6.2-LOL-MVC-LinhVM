@@ -187,7 +187,7 @@ MonoBehaviour:
   anim: {fileID: 7192158722207434440}
   rotateSpeed: 0.05
   smothTime: 0.1
-  distanceStop: 3
+  distanceStop: 2
   rotateVelocity: 0
   isAttack: 0
   dame: 10
@@ -196,6 +196,7 @@ MonoBehaviour:
   radius: 5
   player: {fileID: 0}
   vision: {fileID: 8734345944525109232}
+  spearHit: {fileID: 0}
   healthBar: {fileID: 7192158722999840049}
   coliider: {fileID: 7192158722207434486}
   isMoving: 0
