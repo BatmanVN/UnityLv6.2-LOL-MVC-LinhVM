@@ -117,6 +117,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   beAttack: 0
+  playerBeAttack: 0
   onHealthChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -196,6 +197,7 @@ MonoBehaviour:
   radius: 5
   player: {fileID: 0}
   vision: {fileID: 8734345944525109232}
+  timeCount: 3
   spearHit: {fileID: 0}
   healthBar: {fileID: 7192158722999840049}
   coliider: {fileID: 7192158722207434486}

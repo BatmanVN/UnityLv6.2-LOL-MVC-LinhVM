@@ -19,5 +19,6 @@ public class SpearAttack : MonoBehaviour
     {
         spear.spearHit.Play();
         playerHealth.TakeDame(targetPlayer,spear.Dame);
+        playerHealth.playerBeAttack = true;
     }
 }

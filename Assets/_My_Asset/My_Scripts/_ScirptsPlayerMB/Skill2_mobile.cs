@@ -30,6 +30,7 @@ public class Skill2_mobile : BaseSkill
     {
         isClick = false;
         castSkill = true;
+        SkillAttack_mobile.Instance.isCastSkill = true;
         DeCastSkill();
     }
     public override void CastSkill()

@@ -20,6 +20,7 @@ public class Skill3_mobile : BaseSkill
         if (!IsSkillCD)
         {
             isSkill3 = true;
+            SkillAttack_mobile.Instance.isCastSkill = true;
         }
     }
 

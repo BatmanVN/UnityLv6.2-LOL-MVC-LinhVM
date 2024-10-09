@@ -1,6 +1,7 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class SpearController : BaseCharacter
 {
@@ -9,10 +10,11 @@ public class SpearController : BaseCharacter
     [SerializeField] protected float radius;
     [SerializeField] private Transform player;
     [SerializeField] private VisionDetective vision;
+    public float timeCount;
     public AudioSource spearHit;
     public GameObject healthBar;
     public Collider coliider;
-    private Vector3 firstPoint;
+    private Vector3 randomDirection;
     protected bool isFocus;
     public bool isMoving;
     public Health CharacterHealth { get => characterHealth;}
@@ -23,7 +25,7 @@ public class SpearController : BaseCharacter
     public float SmoothTime() => SmothTime; 
     private void Start()
     {
-        firstPoint = transform.position;
+        MoveRandom();
         ChangeState(new SpearIdleState());
     }
     protected void MoveToEnemy()
@@ -38,10 +40,13 @@ public class SpearController : BaseCharacter
         }
         if (!vision.isDetected)
         {
-            Player = null;
-            MoveToPoint(firstPoint);
+            timeCount -= Time.deltaTime;
+            if (timeCount <= 0)
+            {
+                MoveRandom();
+                timeCount = 3f;
+            }
             Agent.stoppingDistance = 0f;
-            RotatePlayer(firstPoint);
             isMoving = true;
         }
     }
@@ -56,6 +61,24 @@ public class SpearController : BaseCharacter
                 isMoving = false;
             }
         }
+    }
+    private void MoveRandom()
+    {
+        Vector3 randomPoint = RandomNavmeshLocation(10f);
+        MoveToPoint(randomPoint);
+        RotatePlayer(randomDirection);
+    }
+    //Tính vị trí random trong vòng tròn với radius khai báo từ vị trí  trung tâm spearman
+    private Vector3 RandomNavmeshLocation(float radius)
+    {
+        Vector3 randomDirection = Random.insideUnitSphere * radius;
+        randomDirection += transform.position; 
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(randomDirection, out hit, radius, 1))
+        {
+            return hit.position; 
+        }
+        return transform.position; 
     }
     public void ChangeState(Istate<SpearController> newState)
     {
@@ -79,5 +102,10 @@ public class SpearController : BaseCharacter
         StateControl();
         MoveToEnemy();
         AttackCondition();
+    }
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.white;
+        Gizmos.DrawWireSphere(transform.position, 10f);
     }
 }

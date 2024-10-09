@@ -17,7 +17,9 @@ public class PlayerController_Mobile : BaseCharacter
     [SerializeField] private Transform target;
     public GameObject BlessGod;
     public GameObject BonusDame;
+    public GameObject kickSkill;
     public GameObject fireSkill;
+    public GameObject hitEffect;
     private Coroutine coroutine;
     public bool isUseJoy;
     public bool isMoving;
@@ -31,7 +33,7 @@ public class PlayerController_Mobile : BaseCharacter
     private void OnValidate() => characterController = GetComponent<CharacterController>();
     private void Start()
     {
-        
+
     }
     private void Update()
     {
@@ -110,22 +112,30 @@ public class PlayerController_Mobile : BaseCharacter
                 component.enabled = false;
             }
         }
-        if (!charaterHealth.dead && charaterHealth.beAttack && !isMoving && !SkillAttack_mobile.Instance.isCastSkill)
+        if (!charaterHealth.dead && charaterHealth.playerBeAttack && !isMoving && !SkillAttack_mobile.Instance.isCastSkill)
         {
-            ChangeAnim(ConstString.hitParaname);
-            charaterHealth.beAttack = false;
+            if (target != null)
+            {
+                float hitkDistance = Vector3.Distance(transform.position, target.transform.position);
+                Debug.Log(hitkDistance);
+                if (hitkDistance < 2f)
+                    ChangeAnim(ConstString.hitParaname);
+            }
+        }
+        if (charaterHealth.playerBeAttack)
+        {
+            hitEffect.SetActive(true);
         }
     }
-   private IEnumerator EnableLoseBar()
+    private void TurnOfHitEffect()
+    {
+        hitEffect.SetActive(false);
+        charaterHealth.playerBeAttack = false;
+    }
+    private IEnumerator EnableLoseBar()
     {
         yield return new WaitForSeconds(3f);
         UiManager.Instance.UiGames[1].SetActive(true);
         StopCoroutine(coroutine);
-    }
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, QualifiedDistance);
-
     }
 }

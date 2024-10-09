@@ -56,50 +56,55 @@ public class SkillAttack_mobile : Singleton<SkillAttack_mobile>
     }
     public void StatusSkill()
     {
-        if (!skill1.isClick && !skill1.IsSkillCD)
+        if (!player.CharaterHealth.dead)
         {
-            if (skill1.castSkill)
+            if (!skill1.isClick && !skill1.IsSkillCD)
             {
-                RectTransform skillCanvas = skill1.Skill.GetComponent<RectTransform>();
-                player.transform.rotation = skillCanvas.transform.rotation;
-                player.ChangeAnim(ConstString.kickParaname);
-                skill1.castSkill = false;
-                skill1.IsSkillCD = true;
-                isCastSkill = true;
-                audios[0].Play();
+                if (skill1.castSkill)
+                {
+                    RectTransform skillCanvas = skill1.Skill.GetComponent<RectTransform>();
+                    player.transform.rotation = skillCanvas.transform.rotation;
+                    player.ChangeAnim(ConstString.kickParaname);
+                    skill1.castSkill = false;
+                    skill1.IsSkillCD = true;
+                    audios[0].Play();
+                }
             }
-        }
-        if (!skill2.isClick && !skill2.IsSkillCD)
-        {
-            if (skill2.castSkill)
+            if (!skill2.isClick && !skill2.IsSkillCD)
             {
-                RectTransform skillCanvas = skill2.Skill.GetComponent<RectTransform>();
-                player.transform.rotation = skillCanvas.transform.rotation;
-                player.ChangeAnim(ConstString.swordParaname);
-                skill2.castSkill = false;
-                skill2.IsSkillCD = true;
-                isCastSkill = true;
-                audios[1].Play();
+                if (skill2.castSkill)
+                {
+                    RectTransform skillCanvas = skill2.Skill.GetComponent<RectTransform>();
+                    player.transform.rotation = skillCanvas.transform.rotation;
+                    player.ChangeAnim(ConstString.swordParaname);
+                    skill2.castSkill = false;
+                    skill2.IsSkillCD = true;
+                    audios[1].Play();
+                }
             }
-        }
-        if (skill3.isSkill3)
-        {
-            player.ChangeAnim(ConstString.powerUpParaname);
-            player.BlessGod.SetActive(true);
-            player.BonusDame.SetActive(true);
-            skill3.isSkill3 = false;
-            skill3.IsSkillCD = true;
-            isCastSkill = true;
-            Invoke(nameof(DisableVFXBonusDame), 10f);
-            audios[2].Play();
+            if (skill3.isSkill3)
+            {
+                player.ChangeAnim(ConstString.powerUpParaname);
+                player.BlessGod.SetActive(true);
+                player.BonusDame.SetActive(true);
+                skill3.isSkill3 = false;
+                skill3.IsSkillCD = true;
+                Invoke(nameof(DisableVFXBonusDame), 10f);
+                audios[2].Play();
+            }
         }
     }
     public void AttackSkill3()
     {
         player.CharaterHealth.Healing(player.gameObject, player.HealAmount);
     }
+    public void CastSkill1()
+    {
+        player.kickSkill.SetActive(true);
+    }
     public void DeCastSkill1()
     {
+        player.kickSkill.SetActive(false);
         isCastSkill = false;
     }
     public void DisableVfxSkill2()

@@ -122,6 +122,19 @@ public class PlayerController : BaseCharacter
             currentState.OnExercute(this);
         }
     }
+    public bool HitCOndition()
+    {
+        if (target != null)
+        {
+            float hitkDistance = Vector3.Distance(transform.position, target.transform.position);
+            if (hitkDistance < 2f)
+            {
+                ChangeAnim(ConstString.hitParaname);
+                return true;
+            }
+        }
+        return false;
+    }
     public void ChangeState(Istate<PlayerController> newState)
     {
         if (currentState != null)

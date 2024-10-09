@@ -27,7 +27,7 @@ public class DFAttack : MonoBehaviour
         {
             player.ChangeAnimBool(ConstString.defaultAttack, true);
         }
-        if(!player.isAttack && !isClick)
+        if(!player.isAttack && !isClick || SkillAttack_mobile.Instance.isCastSkill || player.CharaterHealth.dead)
         {
             player.ChangeAnimBool(ConstString.defaultAttack, false);
         }

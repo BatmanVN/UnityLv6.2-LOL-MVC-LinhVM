@@ -10,6 +10,7 @@ public class Health : MonoBehaviour
     [SerializeField] private float healthPoint;
     [SerializeField] protected UnityEvent onDie;
     public bool beAttack;
+    public bool playerBeAttack;
     public UnityEvent<float, float> onHealthChanged;
     public bool dead => HealthPoint <= 0;
 
