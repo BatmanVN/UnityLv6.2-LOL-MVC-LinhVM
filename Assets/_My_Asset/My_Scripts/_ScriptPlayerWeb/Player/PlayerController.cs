@@ -71,10 +71,10 @@ public class PlayerController : BaseCharacter
             {
                 if (Input.GetKeyDown(keyCodes[i]) && !listSkill[i].IsSkillCD)
                 {
-                    isSkill = true;
                     if (i == 2)
                     {
                         CurrentSkill = 3;
+                        isSkill = true;
                     }
                     for (int j = 0; j < keyCodes.Count; j++)
                     {
@@ -98,6 +98,7 @@ public class PlayerController : BaseCharacter
                     {
                         RotatePlayer(hit.point);
                     }
+                    isSkill = true;
                 }
             }
         }

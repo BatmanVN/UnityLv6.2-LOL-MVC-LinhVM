@@ -12,7 +12,7 @@ public class RunState : Istate<PlayerController>
 
     public void OnExercute(PlayerController player)
     {
-        if (player.CheckSpeedMovement() > 0)
+        if (player.CheckSpeedMovement() > 0 && !player.isSkill)
         {
             player.MoveAnim(ConstString.moveParaname, player.CheckSpeedMovement(), player.SmothTime);
 

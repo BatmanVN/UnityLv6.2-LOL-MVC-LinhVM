@@ -11,7 +11,7 @@ public class HitState : Istate<PlayerController>
 
     public void OnExercute(PlayerController player)
     {
-        if (player.CharacterHealth.beAttack)
+        if (player.CharacterHealth.beAttack && !player.isAttack && !player.isSkill && !player.isMoving)
         {
             player.ChangeAnim(ConstString.hitParaname);
             player.CharacterHealth.beAttack = false;

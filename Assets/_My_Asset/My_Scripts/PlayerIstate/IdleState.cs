@@ -27,10 +27,6 @@ public class IdleState : Istate<PlayerController>
             {
                 player.ChangeState(new SkillState());
             }
-            if (player.CharacterHealth.beAttack)
-            {
-                player.ChangeState(new HitState());
-            }
         }
         if (player.CheckSpeedMovement() > 0)
         {

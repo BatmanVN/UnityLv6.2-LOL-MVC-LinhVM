@@ -11,26 +11,33 @@ public class SkillState : MonoBehaviour, Istate<PlayerController>
 
     public void OnExercute(PlayerController player)
     {
-        if (player.CurrentSkill == 1)
+        if (player.CurrentSkill == 1 && player.isSkill)
         {
             player.CurrentSkill = 0;
             player.ChangeAnim(ConstString.kickParaname);
+            player.CharacterHealth.beAttack = false;
+            player.isAttack = false;
             player.isSkill = false;
         }
-        if (player.CurrentSkill == 2)
+        if (player.CurrentSkill == 2 && player.isSkill)
         {
             player.CurrentSkill = 0;
             player.ChangeAnim(ConstString.swordParaname);
+            player.isMoving = false;
+            player.CharacterHealth.beAttack = false;
+            player.isSkill = false;
         }
-        if (player.CurrentSkill == 3)
+        if (player.CurrentSkill == 3 && player.isSkill)
         {
+            player.ChangeAnim(ConstString.powerUpParaname);
             player.CharacterHealth.Healing(player.gameObject,player.HealAmount);
             player.CurrentSkill = 0;
-            player.ChangeAnim(ConstString.powerUpParaname);
             OnBonusDame(player, 10, 1);
             player.StartCoroutine(OnDeBonusDame(player, 10, 1));
             player.StartCoroutine(EnableVfx(0));
             player.StartCoroutine(DisableVfx(0, 4f));
+            player.CharacterHealth.beAttack = false;
+            player.isAttack = false;
             player.isSkill = false;
         }
         if (player.isMoving)

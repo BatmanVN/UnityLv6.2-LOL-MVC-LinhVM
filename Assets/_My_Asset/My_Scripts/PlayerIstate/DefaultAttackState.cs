@@ -18,7 +18,7 @@ public class DefaultAttackState : Istate<PlayerController>
         if (player.isSkill)
         {
             player.ChangeAnimBool(ConstString.attackParaname, false);
-            player.ChangeState(new IdleState());
+            player.ChangeState(new SkillState());
         }
         if (player.isMoving && !player.isAttack)
         {
